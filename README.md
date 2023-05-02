@@ -10,5 +10,8 @@ Frontend directory set up, `create-react-app` run, unneccessary default files/co
 
 Footer icons and positioning updated. Header updated and stripped back.     
 
+**React Router** installed and implemented. Components added for Home, Index and Add. Navigation user footer tabs added: n.b. - if user manually navigates to a route, the tabs do not update accordingly at present.      
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
+- Footer nav icons do not update correctly if user manually navigates to a path.        
