@@ -1,8 +1,9 @@
 .app-body {
     height: 100%;
+    padding-bottom: 20vh;
 }
 
-footer {
+footer > * {
     margin-bottom: 2px;
     display: flex;
     justify-content: center;

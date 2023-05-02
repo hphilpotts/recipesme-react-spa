@@ -14,6 +14,10 @@ Footer icons and positioning updated. Header updated and stripped back.
 
 DB seeded with dummy data in prep for implementing index and detail components and functionality. Axios installed. First GET `/recipes` request working in FE - again I have had issues with the image url append functionality within the BE `recipeController.js`.      
 
+Footer now fixed position: added vh-linked padding to bottom of `Body.js` to ensure data is not obscured by nav footer.     
+
+Updated Recipe Index / Overview components: now displaying in flex-box with hidden div to ensure bottom row remains left-aligned.
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
