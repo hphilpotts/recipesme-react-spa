@@ -16,7 +16,13 @@ DB seeded with dummy data in prep for implementing index and detail components a
 
 Footer now fixed position: added vh-linked padding to bottom of `Body.js` to ensure data is not obscured by nav footer.     
 
-Updated Recipe Index / Overview components: now displaying in flex-box with hidden div to ensure bottom row remains left-aligned.
+Updated Recipe Index / Overview components: now displaying in flex-box with hidden div to ensure bottom row remains left-aligned.       
+
+03/05/23:       
+
+Now working on providing recipe detail. After some thinking (and advice getting) I have used a combination of `useNavigate()` and `useParams()` to pass recipe object id into an Axios request via the URL params.      
+
+`RecipeDetail.js` component now successfuly recieving Axios requests. Next step is formatting details component(s).     
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     

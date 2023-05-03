@@ -14,11 +14,11 @@ export default function Footer() {
   const [value, setValue] = React.useState(0);
   const paths = ['/', '/index', '/add']
 
-  const navigate = useNavigate();
+  const navigateTo = useNavigate();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    navigate(`${paths[newValue]}`)
+    navigateTo(`${paths[newValue]}`)
   };
 
   return (
