@@ -24,6 +24,8 @@ Now working on providing recipe detail. After some thinking (and advice getting)
 
 `RecipeDetail.js` component now successfuly recieving Axios requests. Next step is formatting details component(s).     
 
+`RecipeIngredients.js` component added - props being passed from parent (RecipeDetail) by mapping over `res.data.ingredients` and storing this in a state to be passed as a prop.       
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
