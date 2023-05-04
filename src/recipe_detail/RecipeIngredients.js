@@ -1,10 +1,11 @@
 import React from 'react'
 
+import { v4 as uuid } from 'uuid';
+
 export default function RecipeIngredients({ ingredients }) {
 
-    // TODO proper key please
     const ingredientList = ingredients.map(item => (
-        <li key={item._id}>{item.amount} {item.item}</li>
+        <li key={uuid()}>{item.amount} {item.item}</li>
     ))
 
     return (
