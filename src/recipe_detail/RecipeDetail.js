@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { v4 as uuid } from 'uuid';
+
 import { useParams } from 'react-router-dom'
 
 import Axios from 'axios'
@@ -14,9 +16,8 @@ export default function RecipeDetail() {
   const [steps, setSteps] = useState([])
 
   const renderTags = (tags) => {
-    console.log(tags);
     if (tags) {
-      return tags.map(tag => <span>{tag}</span>)
+      return tags.map(tag => <span key={uuid()}>{tag}</span>)
     }
   }
 
@@ -25,7 +26,6 @@ export default function RecipeDetail() {
   useEffect(() => {
     Axios.get(`/recipes/${params.id}`)
       .then(res => {
-        console.log(res.data)
         setRecipe(res.data)
         setIngredients(res.data.ingredients.map(item => item))
         setSteps(res.data.steps)
@@ -40,7 +40,7 @@ export default function RecipeDetail() {
       <h1>{recipe.title}</h1>
       {/* TODO - add image here when functionality up and running! */}
       <h2>{recipe.description}</h2>
-      <div style={{display:"flex", justifyContent:"space-evenly"}}><span style={{fontWeight:"bold"}}>Recipe tags:</span>{renderTags(recipe.tags)}</div>
+      <div style={{ display: "flex", justifyContent: "space-evenly" }}><span style={{ fontWeight: "bold" }}>Recipe tags:</span>{renderTags(recipe.tags)}</div>
       <div>
         <h3>Ingredients:</h3>
         <RecipeIngredients ingredients={ingredients} />

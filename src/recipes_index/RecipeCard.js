@@ -17,6 +17,7 @@ export default function RecipeCard(props) {
 
   const showRecipeDetail = () => {
     navigateTo(`/recipes/${recipe._id}`)
+    props.isInDetailView(true)
   } 
 
   return (

@@ -9,12 +9,12 @@ import Add from '../add_recipe/AddRecipe'
 
 import './Main.css'
 
-export default function Body() {
+export default function Body({ isInDetailView }) {
   return (
     <div className='app-body'>
       <Routes>
         <Route path='/' element={<Homepage/>}></Route>
-        <Route path='index' element={<RecipeIndex/>}></Route>
+        <Route path='index' element={<RecipeIndex isInDetailView={isInDetailView} />}></Route>
         <Route path='recipes/:id' element={<RecipeDetail/>}></Route>
         <Route path='add' element={<Add/>}></Route>
       </Routes>

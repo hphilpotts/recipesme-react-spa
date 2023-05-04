@@ -8,7 +8,7 @@ import RecipeCard from './RecipeCard'
 
 import './RecipeIndex.css'
 
-export default function Index() {
+export default function Index({ isInDetailView }) {
 
   const [recipes, setrecipes] = useState([])
 
@@ -16,7 +16,6 @@ export default function Index() {
 
     Axios.get('/recipes')
       .then(res => {
-        console.log(res.data);
         setrecipes(res.data)
       })
       .catch(err => {
@@ -31,7 +30,7 @@ export default function Index() {
 
   const recipeIndex = recipes.map(
     recipe => (
-      <RecipeCard data={recipe} key={recipe._id} />
+      <RecipeCard data={recipe} key={recipe._id} isInDetailView={isInDetailView} />
     )
   )
 
