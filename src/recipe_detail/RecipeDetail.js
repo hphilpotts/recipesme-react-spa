@@ -5,11 +5,13 @@ import { useParams } from 'react-router-dom'
 import Axios from 'axios'
 
 import RecipeIngredients from './RecipeIngredients'
+import RecipeSteps from './RecipeSteps'
 
 export default function RecipeDetail() {
 
   const [recipe, setRecipe] = useState([])
   const [ingredients, setIngredients] = useState([])
+  const [steps, setSteps] = useState([])
 
   const params = useParams()
 
@@ -20,6 +22,7 @@ export default function RecipeDetail() {
           console.log(res.data)
           setRecipe(res.data)
           setIngredients(res.data.ingredients.map(item => item))
+          setSteps(res.data.steps)
         })
         .catch(err => {
           console.error(err)
@@ -32,10 +35,11 @@ export default function RecipeDetail() {
       <h2>{recipe.description}</h2>
       <div>
         <h3>Ingredients:</h3>
-        <RecipeIngredients ingredients={ingredients}></RecipeIngredients>
+        <RecipeIngredients ingredients={ingredients}/>
       </div>
       <div>
         <h3>Steps:</h3>
+        <RecipeSteps steps={steps}/>
       </div>
     </>
   )
