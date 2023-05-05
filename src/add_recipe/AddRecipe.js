@@ -1,5 +1,8 @@
 import { React, useState } from 'react'
 
+import AddIngredient from './AddIngredient'
+import AddStep from './AddStep'
+
 import './AddRecipe.css'
 
 export default function Add() {
@@ -9,8 +12,8 @@ export default function Add() {
     description: '',
     tags: [],
     image: '',
-    ingredients: '',
-    steps: ''
+    ingredients: [],
+    steps: []
   })
 
   const formChangeHandler = target => {
@@ -26,6 +29,12 @@ export default function Add() {
     setFormInput(newFormInput)
   }
 
+  const addFieldHandler = (input, inputType) => {
+    const newFormInput = formInput
+    newFormInput[inputType].push(input)
+    setFormInput(newFormInput)
+  }
+
   const imageUploadHandler = target => {
     const newFormInput = formInput
     newFormInput.image = target.files[0]
@@ -35,7 +44,7 @@ export default function Add() {
   const formSubmitHandler = e => {
     e.preventDefault()
     if (validateInput(formInput)) {
-      // TODO : Axios POST request below instead of logs once correct inpuy field types have been set up
+      // TODO : Axios POST request below instead of logs once correct input field types have been set up
       // Along the lines of:
 
       /* 
@@ -94,13 +103,14 @@ export default function Add() {
         image
         <input id="file" type="file" name="image" accept="image/png, image/gif, image/jpeg" onChange={e => imageUploadHandler(e.target)} />
       </label>
+
       <label>
         ingredients
-        <input name={'ingredients'} onChange={e => formChangeHandler(e.target)} />
+        <AddIngredient addFieldHandler={addFieldHandler} />
       </label>
       <label>
         steps
-        <input name={'steps'} onChange={e => formChangeHandler(e.target)} />
+        <AddStep addFieldHandler={addFieldHandler} />
       </label>
       <button type='submit' onClick={formSubmitHandler}>Submit form</button>
     </form>
