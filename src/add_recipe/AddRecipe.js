@@ -7,7 +7,7 @@ export default function Add() {
   const [formInput, setFormInput] = useState({
     title: '',
     description: '',
-    tags: '',
+    tags: [],
     image: '',
     ingredients: '',
     steps:''
@@ -15,7 +15,14 @@ export default function Add() {
 
   const formChangeHandler = target => {
     const newFormInput = formInput
-    newFormInput[target.name] = target.value
+
+    // ? would this be better as separate functions for checkbox and text ?
+    if (target.type === 'checkbox') {
+      target.checked ? newFormInput.tags.push(target.value) : newFormInput.tags = newFormInput.tags.filter(item => (item !== target.value))
+    } else  {
+      newFormInput[target.name] = target.value
+    }
+
     setFormInput(newFormInput)
   }
 
@@ -47,11 +54,13 @@ export default function Add() {
     for (const field in form) {
       if (!form[field]) {
         console.warn(`The ${field} field is empty! Please try again!`)
-        isValid = false
+        // isValid = false
       } 
     }
     return isValid
   }
+
+  const tags = [ 'Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek' ]
 
   return (
     <form style={{ display:"flex", flexDirection:"column", alignItems:"center"}}>
@@ -61,12 +70,21 @@ export default function Add() {
       </label>
       <label>
         description
-        <input name={'description'} onChange={e => formChangeHandler(e.target)}/>
+        <textarea name={'description'} onChange={e => formChangeHandler(e.target)}/>
       </label>
-      <label>
-        tags
-        <input name={'tags'} onChange={e => formChangeHandler(e.target)}/>
-      </label>
+      {tags.map((tag, index) => {
+          return(
+            <label key={index}>
+              <input 
+                type="checkbox"
+                name={tag}
+                value={tags[index]}
+                onChange={e => formChangeHandler(e.target)}
+              />{tag}
+              <br></br>
+            </label>)
+          })
+        }
       <label>
         image
         <input name={'image'} onChange={e => formChangeHandler(e.target)}/>
