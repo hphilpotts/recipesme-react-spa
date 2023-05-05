@@ -10,7 +10,7 @@ export default function Add() {
     tags: [],
     image: '',
     ingredients: '',
-    steps:''
+    steps: ''
   })
 
   const formChangeHandler = target => {
@@ -19,10 +19,16 @@ export default function Add() {
     // ? would this be better as separate functions for checkbox and text ?
     if (target.type === 'checkbox') {
       target.checked ? newFormInput.tags.push(target.value) : newFormInput.tags = newFormInput.tags.filter(item => (item !== target.value))
-    } else  {
+    } else {
       newFormInput[target.name] = target.value
     }
 
+    setFormInput(newFormInput)
+  }
+
+  const imageUploadHandler = target => {
+    const newFormInput = formInput
+    newFormInput.image = target.files[0]
     setFormInput(newFormInput)
   }
 
@@ -30,17 +36,17 @@ export default function Add() {
     e.preventDefault()
     if (validateInput(formInput)) {
       // TODO : Axios POST request below instead of logs once correct inpuy field types have been set up
-        // Along the lines of:
+      // Along the lines of:
 
-        /* 
-        Axios.post('/recipe', formInput)
-          .then(res => {
-            [...]
-          })
-          .catch(err => {
-            console.err(err)
-          })
-        */
+      /* 
+      Axios.post('/recipe', formInput)
+        .then(res => {
+          [...]
+        })
+        .catch(err => {
+          console.err(err)
+        })
+      */
 
       console.log('saving the below form:')
       console.log(formInput)
@@ -49,55 +55,54 @@ export default function Add() {
   }
 
   // ? could this instead be achieved with (for e.g.) `<input name="title" [...] required />` ?
-  const validateInput = form => { 
+  const validateInput = form => {
     let isValid = true
     for (const field in form) {
       if (!form[field]) {
         console.warn(`The ${field} field is empty! Please try again!`)
+        // TODO : uncomment once form input implementation completed and tested
         // isValid = false
-      } 
+      }
     }
     return isValid
   }
 
-  const tags = [ 'Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek' ]
+  const tags = ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek']
 
   return (
-    <form style={{ display:"flex", flexDirection:"column", alignItems:"center"}}>
+    <form style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <label>
         recipe name
-        <input name={'title'} onChange={e => formChangeHandler(e.target)}/>
+        <input name={'title'} onChange={e => formChangeHandler(e.target)} />
       </label>
       <label>
         description
-        <textarea name={'description'} onChange={e => formChangeHandler(e.target)}/>
+        <textarea name={'description'} onChange={e => formChangeHandler(e.target)} />
       </label>
       {tags.map((tag, index) => {
-          return(
-            <label key={index}>
-              <input 
-                type="checkbox"
-                name={tag}
-                value={tags[index]}
-                onChange={e => formChangeHandler(e.target)}
-              />{tag}
-              <br></br>
-            </label>)
-          })
-        }
+        return (
+          <label key={index}>
+            <input
+              type="checkbox"
+              value={tags[index]}
+              onChange={e => formChangeHandler(e.target)}
+            />{tag}
+          </label>)
+      })
+      }
       <label>
         image
-        <input name={'image'} onChange={e => formChangeHandler(e.target)}/>
+        <input id="file" type="file" name="image" accept="image/png, image/gif, image/jpeg" onChange={e => imageUploadHandler(e.target)} />
       </label>
       <label>
         ingredients
-        <input name={'ingredients'} onChange={e => formChangeHandler(e.target)}/>
+        <input name={'ingredients'} onChange={e => formChangeHandler(e.target)} />
       </label>
       <label>
         steps
-        <input name={'steps'} onChange={e => formChangeHandler(e.target)}/>
+        <input name={'steps'} onChange={e => formChangeHandler(e.target)} />
       </label>
-        <button type='submit' onClick={formSubmitHandler}>Submit form</button>
+      <button type='submit' onClick={formSubmitHandler}>Submit form</button>
     </form>
   )
 }
