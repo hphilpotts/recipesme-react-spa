@@ -17,7 +17,7 @@ export default function Add() {
   })
 
   const formChangeHandler = target => {
-    const newFormInput = formInput
+    const newFormInput = { ...formInput }
 
     // ? would this be better as separate functions for checkbox and text ?
     if (target.type === 'checkbox') {
@@ -30,13 +30,18 @@ export default function Add() {
   }
 
   const addFieldHandler = (input, inputType) => {
-    const newFormInput = formInput
-    newFormInput[inputType].push(input)
-    setFormInput(newFormInput)
+    if (!input) {
+      console.warn('input is empty!');
+    } else {
+      const newFormInput = { ...formInput }
+      newFormInput[inputType].push(input)
+      setFormInput(newFormInput)
+    }
+
   }
 
   const imageUploadHandler = target => {
-    const newFormInput = formInput
+    const newFormInput = { ...formInput }
     newFormInput.image = target.files[0]
     setFormInput(newFormInput)
   }
@@ -110,6 +115,9 @@ export default function Add() {
       </label>
       <label>
         steps
+        {formInput.steps.map((step, index) => {
+          return <p key={`step ${index}`}>{step}</p>
+        })}
         <AddStep addFieldHandler={addFieldHandler} />
       </label>
       <button type='submit' onClick={formSubmitHandler}>Submit form</button>
