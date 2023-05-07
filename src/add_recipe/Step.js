@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default function Step({ step, index, removeFieldHandler }) {
+export default function Step({ step, removeStepHandler }) {
 
     const removeStep = (e, step) => {
         e.preventDefault()
-        removeFieldHandler(step, 'steps')
+        removeStepHandler(step)
     }
 
     return (

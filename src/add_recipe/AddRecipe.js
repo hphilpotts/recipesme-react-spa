@@ -3,6 +3,7 @@ import { React, useState } from 'react'
 import { v4 as uuid } from 'uuid';
 
 import AddIngredient from './AddIngredient'
+import Ingredient from './Ingredient';
 import AddStep from './AddStep'
 import Step from './Step'
 
@@ -33,19 +34,21 @@ export default function Add() {
   }
 
   const addFieldHandler = (input, inputType) => {
-    if (!input) {
-      console.warn('input is empty!');
-    } else {
       const newFormInput = { ...formInput }
       newFormInput[inputType].push(input)
       setFormInput(newFormInput)
-    }
-
   }
 
-  const removeFieldHandler = (step, inputType) => {
+  const removeStepHandler = (stepToRemove) => {
     const newFormInput = { ...formInput }
-    newFormInput[inputType] = (newFormInput[inputType]).filter(item => (item !== step))
+    newFormInput.steps = newFormInput.steps.filter(step => (step !== stepToRemove))
+    setFormInput(newFormInput)
+  }
+
+  const removeIngredientHandler = (ingredientItemToRemove) => {
+    console.log(ingredientItemToRemove);
+    const newFormInput = { ...formInput }
+    newFormInput.ingredients = newFormInput.ingredients.filter(function(ingredient) { return ingredient.item !== ingredientItemToRemove })
     setFormInput(newFormInput)
   }
 
@@ -120,12 +123,15 @@ export default function Add() {
 
       <label>
         ingredients
+        {formInput.ingredients.map((ingredient) => (
+          <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
+        ))}
         <AddIngredient addFieldHandler={addFieldHandler} />
       </label>
       <label>
         steps
-        {formInput.steps.map((step, index) => (
-          <Step step={step} removeFieldHandler={removeFieldHandler} key={uuid()} />
+        {formInput.steps.map((step) => (
+          <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
         ))}
         <AddStep addFieldHandler={addFieldHandler} />
       </label>
