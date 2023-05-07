@@ -11,6 +11,7 @@ import './AddRecipe.css'
 
 export default function Add() {
 
+
   const [formInput, setFormInput] = useState({
     title: '',
     description: '',
@@ -20,23 +21,37 @@ export default function Add() {
     steps: []
   })
 
-  const formChangeHandler = target => {
-    const newFormInput = { ...formInput }
+  const tags = ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek']
 
-    // ? would this be better as separate functions for checkbox and text ?
-    if (target.type === 'checkbox') {
-      target.checked ? newFormInput.tags.push(target.value) : newFormInput.tags = newFormInput.tags.filter(item => (item !== target.value))
-    } else {
-      newFormInput[target.name] = target.value
-    }
+  const [isChecked, setIsChecked] = useState(new Array(tags.length).fill(false))
 
+  const textChangeHandler = target => {
+    const newFormInput = formInput
+    newFormInput[target.name] = target.value
     setFormInput(newFormInput)
   }
 
+  const checkboxChangeHandler = target => {
+    const tag = target.value
+
+    const newFormInput = { ...formInput }
+    if (target.checked) {
+      newFormInput.tags.push(tag)
+    } else {
+      newFormInput.tags = newFormInput.tags.filter(item => (item !== tag))
+    }
+    setFormInput(newFormInput)
+
+    const index = tags.indexOf(tag)
+    const newIsChecked = { ...isChecked }
+    newIsChecked[index] = !newIsChecked[index]
+    setIsChecked(newIsChecked)
+  }
+
   const addFieldHandler = (input, inputType) => {
-      const newFormInput = { ...formInput }
-      newFormInput[inputType].push(input)
-      setFormInput(newFormInput)
+    const newFormInput = { ...formInput }
+    newFormInput[inputType].push(input)
+    setFormInput(newFormInput)
   }
 
   const removeStepHandler = (stepToRemove) => {
@@ -47,7 +62,7 @@ export default function Add() {
 
   const removeIngredientHandler = (ingredientItemToRemove) => {
     const newFormInput = { ...formInput }
-    newFormInput.ingredients = newFormInput.ingredients.filter(function(ingredient) { return ingredient.item !== ingredientItemToRemove })
+    newFormInput.ingredients = newFormInput.ingredients.filter(function (ingredient) { return ingredient.item !== ingredientItemToRemove })
     setFormInput(newFormInput)
   }
 
@@ -92,17 +107,15 @@ export default function Add() {
     return isValid
   }
 
-  const tags = ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek']
-
   return (
     <form style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <label>
         recipe name
-        <input name={'title'} onChange={e => formChangeHandler(e.target)} />
+        <input name={'title'} onChange={e => textChangeHandler(e.target)} />
       </label>
       <label>
         description
-        <textarea name={'description'} onChange={e => formChangeHandler(e.target)} />
+        <textarea name={'description'} onChange={e => textChangeHandler(e.target)} />
       </label>
       {tags.map((tag, index) => {
         return (
@@ -110,7 +123,8 @@ export default function Add() {
             <input
               type="checkbox"
               value={tags[index]}
-              onChange={e => formChangeHandler(e.target)}
+              checked={isChecked[index]}
+              onChange={e => checkboxChangeHandler(e.target)}
             />{tag}
           </label>)
       })

@@ -56,6 +56,8 @@ Solved an issue where the `AppBody` component was not growing as its child eleme
 
 The `AddStep` input box does not currently submit on enter - I feel users would naturally choose this over the `+` button. Adding an `eventListener()` to `inputElement` sometimes causes errors (`Cannot read properties of null ()`) - instead I went for another function `submitOnEnterPress()` which is called `onKeyDown` and reuses `addButtonPress()` if `e.key === 'Enter'`. I'm pretty pleased with this solution as it feels quite neat and simple!      
 
+07/05/23:       
+
 Added steps now render within a component `Step.js` inside `AddStep`. A `-` button allows for previously added steps to be removed as well.     
 
 Next, I am rolling out the same functionality to ingredients. Some code is just 'copy-paste' from `Step` / `AddStep`, however the fact that each ingredients array item is an object rather than a string brings some additional nuance. I've decided to split out `removeFieldHandler()` into `removeStepHandler()` and `removeIngredientHandler()` due to their differing approach to filtering arrays of strings and objects respectively. I have also used `.select()` in order to move the cursor from the `ingredient` input box on the right to the `quantity` input box on the left of `AddIngredient` as this makes for more user-friendly form completion.
@@ -64,7 +66,11 @@ I had previously been checking for empty ingredient/step inputs within `addField
 
 In implementing the above, I noticed a bug whereby pressing enter on an empty `amount-input` field also triggered an `onClick` event in the 'remove ingredient' button for the most recently logged ingredient. I was not able to trace back the cause of the issue, however by adding `onKeyDown={e => submitOnEnterPress(e)}` to the `amount-input` field rectified this issue.       
 
+As I was about to move onto Axios testing for the `AddRecipe` form, I noticed that my (previously working) checkboxes no longer worked. I initially traced this issue back to the use of spread syntax (`const newFormInput = {...formInput}` - added after checkbox functionality was tested), however when I changed back to my initial approach of directly assigning the `formInput` state to the `newFormInput` variable, the checkboxes seemingly worked but would not save their `checked` prop upon further interaction with the form.      
+
+Firstly, I finally made the call to separate out checkbox inputs from text inputs. I then implemented an `isChecked` state, intialised as an array of `false` booleans the length of the `tags` array. As checkboxes are checked and unchecked, `formInput.tags` is updated as before, but now the new `isChecked` array is also updated: the `checked` prop of each checkbox is set based on its respective index within the boolean `isChecked` array, thus storing checked statuses safely in state.     
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
-- Recipe steps cannot yet be reorderd during `AddRecipe` form submit.       
+- Recipe steps cannot yet be reordered or edited during `AddRecipe` form submit.       
