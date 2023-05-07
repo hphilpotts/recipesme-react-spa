@@ -1,7 +1,10 @@
 import { React, useState } from 'react'
 
+import { v4 as uuid } from 'uuid';
+
 import AddIngredient from './AddIngredient'
 import AddStep from './AddStep'
+import Step from './Step'
 
 import './AddRecipe.css'
 
@@ -38,6 +41,12 @@ export default function Add() {
       setFormInput(newFormInput)
     }
 
+  }
+
+  const removeFieldHandler = (step, inputType) => {
+    const newFormInput = { ...formInput }
+    newFormInput[inputType] = (newFormInput[inputType]).filter(item => (item !== step))
+    setFormInput(newFormInput)
   }
 
   const imageUploadHandler = target => {
@@ -95,7 +104,7 @@ export default function Add() {
       </label>
       {tags.map((tag, index) => {
         return (
-          <label key={index}>
+          <label key={uuid()}>
             <input
               type="checkbox"
               value={tags[index]}
@@ -115,9 +124,9 @@ export default function Add() {
       </label>
       <label>
         steps
-        {formInput.steps.map((step, index) => {
-          return <p key={`step ${index}`}>{step}</p>
-        })}
+        {formInput.steps.map((step, index) => (
+          <Step step={step} removeFieldHandler={removeFieldHandler} key={uuid()} />
+        ))}
         <AddStep addFieldHandler={addFieldHandler} />
       </label>
       <button type='submit' onClick={formSubmitHandler}>Submit form</button>
