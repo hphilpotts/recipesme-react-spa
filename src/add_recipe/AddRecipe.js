@@ -46,7 +46,6 @@ export default function Add() {
   }
 
   const removeIngredientHandler = (ingredientItemToRemove) => {
-    console.log(ingredientItemToRemove);
     const newFormInput = { ...formInput }
     newFormInput.ingredients = newFormInput.ingredients.filter(function(ingredient) { return ingredient.item !== ingredientItemToRemove })
     setFormInput(newFormInput)

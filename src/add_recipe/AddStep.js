@@ -8,9 +8,13 @@ export default function AddStep({ addFieldHandler }) {
 
     const addButtonPress = e => {
         e.preventDefault()
-        addFieldHandler(step, 'steps')
-        setStep('')
-        inputElement.value = ''
+        if (!step) {
+            console.warn('step being added is empty');
+        } else {
+            addFieldHandler(step, 'steps')
+            setStep('')
+            inputElement.value = ''
+        }
     }
 
     const submitOnEnterPress = e => {
