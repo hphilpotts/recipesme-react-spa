@@ -1,5 +1,9 @@
 import { React, useState } from 'react'
 
+import Axios from 'axios'
+
+import { useNavigate } from "react-router-dom";
+
 import { v4 as uuid } from 'uuid';
 
 import AddIngredient from './AddIngredient'
@@ -10,7 +14,6 @@ import Step from './Step'
 import './AddRecipe.css'
 
 export default function Add() {
-
 
   const [formInput, setFormInput] = useState({
     title: '',
@@ -72,36 +75,27 @@ export default function Add() {
     setFormInput(newFormInput)
   }
 
+  const navigateTo = useNavigate()
+
   const formSubmitHandler = e => {
     e.preventDefault()
     if (validateInput(formInput)) {
-      // TODO : Axios POST request below instead of logs once correct input field types have been set up
-      // Along the lines of:
-
-      /* 
       Axios.post('/recipe', formInput)
-        .then(res => {
-          [...]
+        .then(() => {
+          navigateTo('/index')
         })
         .catch(err => {
-          console.err(err)
+          console.error(err)
         })
-      */
-
-      console.log('saving the below form:')
-      console.log(formInput)
     }
-
   }
 
-  // ? could this instead be achieved with (for e.g.) `<input name="title" [...] required />` ?
   const validateInput = form => {
     let isValid = true
     for (const field in form) {
       if (!form[field]) {
         console.warn(`The ${field} field is empty! Please try again!`)
-        // TODO : uncomment once form input implementation completed and tested
-        // isValid = false
+        isValid = false
       }
     }
     return isValid
@@ -109,14 +103,17 @@ export default function Add() {
 
   return (
     <form style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+
       <label>
         recipe name
         <input name={'title'} onChange={e => textChangeHandler(e.target)} />
       </label>
+
       <label>
         description
         <textarea name={'description'} onChange={e => textChangeHandler(e.target)} />
       </label>
+
       {tags.map((tag, index) => {
         return (
           <label key={uuid()}>
@@ -127,11 +124,16 @@ export default function Add() {
               onChange={e => checkboxChangeHandler(e.target)}
             />{tag}
           </label>)
-      })
-      }
+      })}
+
       <label>
         image
-        <input id="file" type="file" name="image" accept="image/png, image/gif, image/jpeg" onChange={e => imageUploadHandler(e.target)} />
+        <input
+          id="file"
+          type="file" 
+          name="image" 
+          accept="image/png, image/gif, image/jpeg" 
+          onChange={e => imageUploadHandler(e.target)} />
       </label>
 
       <label>
@@ -141,6 +143,7 @@ export default function Add() {
         ))}
         <AddIngredient addFieldHandler={addFieldHandler} />
       </label>
+
       <label>
         steps
         {formInput.steps.map((step) => (
@@ -148,6 +151,7 @@ export default function Add() {
         ))}
         <AddStep addFieldHandler={addFieldHandler} />
       </label>
+
       <button type='submit' onClick={formSubmitHandler}>Submit form</button>
     </form>
   )

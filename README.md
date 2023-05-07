@@ -70,6 +70,10 @@ As I was about to move onto Axios testing for the `AddRecipe` form, I noticed th
 
 Firstly, I finally made the call to separate out checkbox inputs from text inputs. I then implemented an `isChecked` state, intialised as an array of `false` booleans the length of the `tags` array. As checkboxes are checked and unchecked, `formInput.tags` is updated as before, but now the new `isChecked` array is also updated: the `checked` prop of each checkbox is set based on its respective index within the boolean `isChecked` array, thus storing checked statuses safely in state.     
 
+First Axios post tests for adding recipes returned `500` errors relating to Mongoose Model validation errors: the problem lay with the ongoing issue I have had with getting image uploads to work on the backend (currently lacking correct AWS/Cloudfront keys in the `.env` file). With the validations around `image` and `imageURL` properties temporarily removed I was able to successfully post new recipe documents to the DB.     
+
+Successful POST requests result in the user being navigated to the Recipe Index.        
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
