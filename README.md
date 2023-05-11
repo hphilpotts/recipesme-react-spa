@@ -74,7 +74,18 @@ First Axios post tests for adding recipes returned `500` errors relating to Mong
 
 Successful POST requests result in the user being navigated to the Recipe Index.        
 
+11/05/23:       
+
+Moving on to UPDATE functionality - this will be accessed through the Recipe Detail components. Buttons added to `RecipeDetail.js`.         
+
+Naturally, I'm going to use the components in `/add_recipe` as a jumping off point. My inital thought is to copy and then adapt the `AddRecipe` component - and then directly reuse the Step/Add Step + Ingredient/Add Ingredient components within `UpdateRecipe.js`. Let's see if it will work!       
+
+Routing set up from `Body` component - the `/update/` route will use an `:id` param to get the recipe data and pre-load the form. This should work, although I wonder whether this is the most efficient way given the recipe data is already populated within `RecipeDetail` is there a better way of passing on this data that does not require another GET?      
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` form submit.       
+- When moving via routes some components render scrolled to the bottom - feels clumsy in most cases. Need to find cause and fix.        
+- Edit recipe requires a duplicated GET request when accessed via Recipe Detail - can this be improved upon?        
+- Remove any inline styles that might be triggering micro re-renders and slowing application down.      

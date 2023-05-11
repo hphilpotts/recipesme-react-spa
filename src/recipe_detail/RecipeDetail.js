@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { v4 as uuid } from 'uuid';
 
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import Axios from 'axios'
 
@@ -35,6 +35,13 @@ export default function RecipeDetail() {
       })
   }, [params.id])
 
+  const navigateTo = useNavigate()
+
+  const loadUpdateRecipeForm = e => {
+    e.preventDefault()
+    navigateTo(`/update/${recipe._id}`)
+  }
+
   return (
     <>
       <h1>{recipe.title}</h1>
@@ -49,6 +56,8 @@ export default function RecipeDetail() {
         <h3>Steps:</h3>
         <RecipeSteps steps={steps} />
       </div>
+      <button onClick={e => loadUpdateRecipeForm(e)}>Edit</button>
+      {/* <button>Delete</button> */}
     </>
   )
 }
