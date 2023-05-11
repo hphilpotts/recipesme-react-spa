@@ -86,7 +86,13 @@ I've decided to implement the above - avoiding a second GET request - instead of
 
 At present, the `recipe` prop is loading `steps` and `ingredients` ok within `UpdateRecipe`, however I am having less success getting other fields to render with previous values as default...     
 
+...and the solution was a simple one: `defaultValue` (rather than, for some reason, `value` as I was using before!). Brain not working so well today!    
 
+I've decided to use the state `fieldsToUpdate` within `UpdateRecipe.js` to provide the `req.body` from which the backend updates the document. As per the API README: _"Only fields wanting updating are necessary"_ - this state only stores fields that have been updated, reducing unneccessary (that is to say, unchanged) data from being passed in the request.       
+
+Tags now load as checked or unchecked based on existing recipe tags, and when changes are made, the `fieldsToUpdate` prop updates accordingly too.      
+
+I've also made the call to extract 'change image' functionality from `UpdateRecipe` and instead perform this from within `RecipeDetail` as a standalone action, for now.        
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
