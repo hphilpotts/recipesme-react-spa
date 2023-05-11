@@ -1,8 +1,8 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 
 import Axios from 'axios'
 
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { v4 as uuid } from 'uuid';
 
@@ -13,16 +13,11 @@ import Step from '../add_recipe/Step'
 
 import '../add_recipe/AddRecipe.css'
 
-export default function Edit() {
+export default function Edit({ recipe }) {
 
-  const [formInput, setFormInput] = useState({
-    title: '',
-    description: '',
-    tags: [],
-    image: '',
-    ingredients: [],
-    steps: []
-  })
+  const [formInput, setFormInput] = useState(recipe)
+
+  const params = useParams()
 
   const tags = ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek']
 
@@ -101,58 +96,73 @@ export default function Edit() {
     return isValid
   }
 
-  return (
-    <form style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+  const setDefaultValues = recipe => {
+    textChangeHandler(recipe.title)
+    textChangeHandler(recipe.description)
+  }
 
-      <label>
-        recipe name
-        <input name={'title'} onChange={e => textChangeHandler(e.target)} />
-      </label>
+  useEffect(() => {
+    setDefaultValues(recipe)
+  })
 
-      <label>
-        description
-        <textarea name={'description'} onChange={e => textChangeHandler(e.target)} />
-      </label>
+  if (!formInput.title) {
+    return <p>loading spinner here please</p>
+  } else {
+    return (
+      <form style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 
-      {tags.map((tag, index) => {
-        return (
-          <label key={uuid()}>
-            <input
-              type="checkbox"
-              value={tags[index]}
-              checked={isChecked[index]}
-              onChange={e => checkboxChangeHandler(e.target)}
-            />{tag}
-          </label>)
-      })}
+        <label>
+          recipe name
+          <input name={'title'} onChange={e => textChangeHandler(e.target)} />
+        </label>
 
-      <label>
-        image
-        <input
-          id="file"
-          type="file" 
-          name="image" 
-          accept="image/png, image/gif, image/jpeg" 
-          onChange={e => imageUploadHandler(e.target)} />
-      </label>
+        <label>
+          description
+          <textarea name={'description'} onChange={e => textChangeHandler(e.target)} />
+        </label>
 
-      <label>
-        ingredients
-        {formInput.ingredients.map((ingredient) => (
-          <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
-        ))}
-        <AddIngredient addFieldHandler={addFieldHandler} />
-      </label>
+        {tags.map((tag, index) => {
+          return (
+            <label key={uuid()}>
+              <input
+                type="checkbox"
+                value={tags[index]}
+                checked={isChecked[index]}
+                onChange={e => checkboxChangeHandler(e.target)}
+              />{tag}
+            </label>)
+        })}
 
-      <label>
-        steps
-        {formInput.steps.map((step) => (
-          <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
-        ))}
-        <AddStep addFieldHandler={addFieldHandler} />
-      </label>
+        <label>
+          image
+          <input
+            id="file"
+            type="file"
+            name="image"
+            accept="image/png, image/gif, image/jpeg"
+            onChange={e => imageUploadHandler(e.target)} />
+        </label>
 
-      <button type='submit' onClick={formSubmitHandler}>Submit form</button>
-    </form>
-  )
+        <label>
+          ingredients
+          {formInput.ingredients.map((ingredient) => (
+            <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
+          ))}
+          <AddIngredient addFieldHandler={addFieldHandler} />
+        </label>
+
+        <label>
+          steps
+          {formInput.steps.map((step) => (
+            <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
+          ))}
+          <AddStep addFieldHandler={addFieldHandler} />
+        </label>
+
+        <button type='submit' onClick={formSubmitHandler}>Submit form</button>
+      </form>
+    )
+  }
 }
+
+

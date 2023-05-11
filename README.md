@@ -80,7 +80,13 @@ Moving on to UPDATE functionality - this will be accessed through the Recipe Det
 
 Naturally, I'm going to use the components in `/add_recipe` as a jumping off point. My inital thought is to copy and then adapt the `AddRecipe` component - and then directly reuse the Step/Add Step + Ingredient/Add Ingredient components within `UpdateRecipe.js`. Let's see if it will work!       
 
-Routing set up from `Body` component - the `/update/` route will use an `:id` param to get the recipe data and pre-load the form. This should work, although I wonder whether this is the most efficient way given the recipe data is already populated within `RecipeDetail` is there a better way of passing on this data that does not require another GET?      
+Routing set up from `Body` component - the `/update/` route will use an `:id` param to get the recipe data and pre-load the form. This should work, although I wonder whether this is the most efficient way given the recipe data is already populated within `RecipeDetail` is there a better way of passing on this data that does not require another GET?     
+
+I've decided to implement the above - avoiding a second GET request - instead of using a `recipe` state in `RecipeDetail` I instead store the state within its parent component `Body` and pass this down as a prop to both `RecipeDetail` and `UpdateRecipe`, granting access to both with a single Axios request.     
+
+At present, the `recipe` prop is loading `steps` and `ingredients` ok within `UpdateRecipe`, however I am having less success getting other fields to render with previous values as default...     
+
+
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     

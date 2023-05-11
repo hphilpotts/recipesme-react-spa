@@ -9,9 +9,8 @@ import Axios from 'axios'
 import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
 
-export default function RecipeDetail() {
+export default function RecipeDetail({ recipe, getRecipe }) {
 
-  const [recipe, setRecipe] = useState([])
   const [ingredients, setIngredients] = useState([])
   const [steps, setSteps] = useState([])
 
@@ -26,14 +25,14 @@ export default function RecipeDetail() {
   useEffect(() => {
     Axios.get(`/recipes/${params.id}`)
       .then(res => {
-        setRecipe(res.data)
+        getRecipe(res.data)
         setIngredients(res.data.ingredients.map(item => item))
         setSteps(res.data.steps)
       })
       .catch(err => {
         console.error(err)
       })
-  }, [params.id])
+  }, [params.id, getRecipe])
 
   const navigateTo = useNavigate()
 
