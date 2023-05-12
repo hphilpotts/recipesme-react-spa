@@ -6,14 +6,14 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { v4 as uuid } from 'uuid';
 
-import AddIngredient from '../add_recipe/AddIngredient'
-import Ingredient from '../add_recipe/Ingredient';
-import AddStep from '../add_recipe/AddStep'
-import Step from '../add_recipe/Step'
+import AddIngredient from './form_components/AddIngredient'
+import Ingredient from './form_components/Ingredient';
+import AddStep from './form_components/AddStep'
+import Step from './form_components/Step'
 
-import '../add_recipe/AddRecipe.css'
+import '../forms/Forms.css'
 
-export default function Edit({ recipe }) {
+export default function EditRecipe({ recipe }) {
 
   const [fieldsToUpdate, setFieldsToUpdate] = useState({})
 

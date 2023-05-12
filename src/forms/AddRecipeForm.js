@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 import { v4 as uuid } from 'uuid';
 
-import AddIngredient from './AddIngredient'
-import Ingredient from './Ingredient';
-import AddStep from './AddStep'
-import Step from './Step'
+import AddIngredient from './form_components/AddIngredient'
+import Ingredient from './form_components/Ingredient';
+import AddStep from './form_components/AddStep'
+import Step from './form_components/Step'
 
-import './AddRecipe.css'
+import './Forms.css'
 
-export default function Add() {
+export default function AddRecipe() {
 
   const [formInput, setFormInput] = useState({
     title: '',
