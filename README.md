@@ -100,6 +100,12 @@ Some adjustments required to get Steps and Ingredients to work correctly in `Upd
 
 Furthermore, when removing items, the `Step` / `Ingredient` components need to be mapped from `fieldsToUpdate` rather than `recipe` as on initial render.       
 
+I've done some restructuring and renaming - given the closeness between Add Recipe and Update Recipe, and the reuse of child components shared by both, I figured it would make more sense for these to be in the same directory with a subdirectory for the shared components.
+
+13/05/23:       
+
+`Axios` request added to `UpdateRecipeForm` - returning `status: 200` and `req.body` is logging in BE as expected (`fieldsToUpdate`) however documents are not updating at present...?      
+
 
 
 ## To add / to-do:      

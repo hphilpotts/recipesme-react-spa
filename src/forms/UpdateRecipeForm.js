@@ -15,24 +15,19 @@ import '../forms/Forms.css'
 
 export default function EditRecipe({ recipe }) {
 
-  const [fieldsToUpdate, setFieldsToUpdate] = useState({})
-
   const params = useParams()
+
+  const [fieldsToUpdate, setFieldsToUpdate] = useState({})
 
   const tags = ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek', 'Bulk']
 
   const defaultTags = tags.map(tag => {
-    console.log(tag);
-    console.log(recipe.tags[1])
-    console.log(tag === recipe.tags[1]);
     if (recipe.tags.includes(tag)) {
       return true
     } else {
       return false
     }
   })
-
-  console.log(defaultTags);
 
   const [isChecked, setIsChecked] = useState(defaultTags)
 
@@ -98,26 +93,15 @@ export default function EditRecipe({ recipe }) {
 
   const formSubmitHandler = e => {
     e.preventDefault()
-    if (validateInput(fieldsToUpdate)) {
-      Axios.post('/recipe', fieldsToUpdate)
-        .then(() => {
-          navigateTo('/index')
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    }
-  }
-
-  const validateInput = form => {
-    let isValid = true
-    for (const field in form) {
-      if (!form[field]) {
-        console.warn(`The ${field} field is empty! Please try again!`)
-        isValid = false
-      }
-    }
-    return isValid
+    const recipeId = params.id
+    console.log(recipeId);
+    Axios.put(`/recipes/${recipeId}`, { fieldsToUpdate })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.error(err);
+      })
   }
 
   return (
