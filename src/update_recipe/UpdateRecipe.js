@@ -67,21 +67,32 @@ export default function Edit({ recipe }) {
 
   const addFieldHandler = (input, inputType) => {
     const newFieldsToUpdate = { ...fieldsToUpdate }
+    if (!newFieldsToUpdate[inputType]) {
+      newFieldsToUpdate[inputType] = recipe[inputType]
+    }
     newFieldsToUpdate[inputType].push(input)
     setFieldsToUpdate(newFieldsToUpdate)
   }
 
   const removeStepHandler = (stepToRemove) => {
     const newFieldsToUpdate = { ...fieldsToUpdate }
+    if (!newFieldsToUpdate.steps) {
+      newFieldsToUpdate.steps = recipe.steps
+    }
     newFieldsToUpdate.steps = newFieldsToUpdate.steps.filter(step => (step !== stepToRemove))
     setFieldsToUpdate(newFieldsToUpdate)
   }
 
   const removeIngredientHandler = (ingredientItemToRemove) => {
     const newFieldsToUpdate = { ...fieldsToUpdate }
+    if (!newFieldsToUpdate.ingredients) {
+      newFieldsToUpdate.ingredients = recipe.ingredients
+    }
     newFieldsToUpdate.ingredients = newFieldsToUpdate.ingredients.filter(function (ingredient) { return ingredient.item !== ingredientItemToRemove })
     setFieldsToUpdate(newFieldsToUpdate)
   }
+
+
 
   const navigateTo = useNavigate()
 
@@ -136,17 +147,32 @@ export default function Edit({ recipe }) {
 
       <label>
         ingredients
-        {recipe.ingredients.map((ingredient) => (
-          <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
-        ))}
+
+        {fieldsToUpdate.ingredients
+          ?
+          fieldsToUpdate.ingredients.map((ingredient) => (
+            <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
+          ))
+          :
+          recipe.ingredients.map((ingredient) => (
+            <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
+          ))
+        }
         <AddIngredient addFieldHandler={addFieldHandler} />
       </label>
 
       <label>
         steps
-        {recipe.steps.map((step) => (
-          <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
-        ))}
+        {fieldsToUpdate.steps
+          ?
+          fieldsToUpdate.steps.map((step) => (
+            <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
+          ))
+          :
+          recipe.steps.map((step) => (
+            <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
+          ))
+        }
         <AddStep addFieldHandler={addFieldHandler} />
       </label>
 

@@ -94,10 +94,18 @@ Tags now load as checked or unchecked based on existing recipe tags, and when ch
 
 I've also made the call to extract 'change image' functionality from `UpdateRecipe` and instead perform this from within `RecipeDetail` as a standalone action, for now.        
 
+12/05/23:       
+
+Some adjustments required to get Steps and Ingredients to work correctly in `UpdateRecipe`. For addition or removal of items from the `steps` or `ingredients` arrays, in the first instance per form load the respective array from `recipe` needs assigning to `newFieldsToUpdate`, otherwise `push()` or `filter()` are being called on `undefined`.
+
+Furthermore, when removing items, the `Step` / `Ingredient` components need to be mapped from `fieldsToUpdate` rather than `recipe` as on initial render.       
+
+
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
-- Recipe steps cannot yet be reordered or edited during `AddRecipe` form submit.       
+- Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
 - When moving via routes some components render scrolled to the bottom - feels clumsy in most cases. Need to find cause and fix.        
 - Edit recipe requires a duplicated GET request when accessed via Recipe Detail - can this be improved upon?        
 - Remove any inline styles that might be triggering micro re-renders and slowing application down.      
