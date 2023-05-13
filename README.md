@@ -106,6 +106,8 @@ I've done some restructuring and renaming - given the closeness between Add Reci
 
 `Axios` request added to `UpdateRecipeForm` - returning `status: 200` and `req.body` is logging in BE as expected (`fieldsToUpdate`) however documents are not updating at present...?      
 
+I'll revisit the above later. Moving on to DELETE functionality now. Was reasonably easy to implement!      
+
 
 
 ## To add / to-do:      

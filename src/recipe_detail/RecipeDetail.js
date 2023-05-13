@@ -8,11 +8,13 @@ import Axios from 'axios'
 
 import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
+import ConfirmDelete from './ConfirmDelete';
 
 export default function RecipeDetail({ recipe, getRecipe }) {
 
   const [ingredients, setIngredients] = useState([])
   const [steps, setSteps] = useState([])
+  const [confirmDeleteIsVisible, setConfirmDeleteIsVisible] = useState(false)
 
   const renderTags = (tags) => {
     if (tags) {
@@ -41,6 +43,28 @@ export default function RecipeDetail({ recipe, getRecipe }) {
     navigateTo(`/update/${recipe._id}`)
   }
 
+  const showConfirmDelete = e => {
+    e.preventDefault()
+    setConfirmDeleteIsVisible(true)
+  }
+
+  const hideConfirmDelete = e => {
+    e.preventDefault()
+    setConfirmDeleteIsVisible(false)
+  }
+
+  const deleteRecipe = e => {
+    e.preventDefault()
+    Axios.delete(`/recipes/${params.id}`)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    navigateTo(`/index`)
+  }
+
   return (
     <>
       <h1>{recipe.title}</h1>
@@ -56,7 +80,13 @@ export default function RecipeDetail({ recipe, getRecipe }) {
         <RecipeSteps steps={steps} />
       </div>
       <button onClick={e => loadUpdateRecipeForm(e)}>Edit</button>
-      {/* <button>Delete</button> */}
+      <button onClick={e => showConfirmDelete(e)} >Delete</button>
+      {confirmDeleteIsVisible
+        ?
+        <ConfirmDelete hideConfirmDelete={hideConfirmDelete} deleteRecipe={deleteRecipe} />
+        :
+        null
+      }
     </>
   )
 }
