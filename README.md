@@ -108,6 +108,8 @@ I've done some restructuring and renaming - given the closeness between Add Reci
 
 I'll revisit the above later. Moving on to DELETE functionality now. Was reasonably easy to implement!      
 
+- _fixed the above issue where document not being updated with three keystrokes... needed `...` in front of `fieldsToUpdate`: without spread syntax the body object had this as a key:value pair rather than the key:values from within `fieldsToUpdate..._     
+
 
 
 ## To add / to-do:      

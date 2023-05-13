@@ -95,7 +95,7 @@ export default function EditRecipe({ recipe }) {
     e.preventDefault()
     const recipeId = params.id
     console.log(recipeId);
-    Axios.put(`/recipes/${recipeId}`, { fieldsToUpdate })
+    Axios.put(`/recipes/${recipeId}`, { ...fieldsToUpdate })
       .then(res => {
         console.log(res);
       })
