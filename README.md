@@ -130,7 +130,11 @@ It seems sensible to make `ingredient.item` compulsory during CREATE/UPDATE reci
 
 As the `Ingredient` and `AddIngredient` components are shared between Add Recipe and Update Recipe forms only one update is required for both, which was nice.      
 
-`ingredient.unit` also added to `RecipeIngredients` within `recipe_detail/`
+`ingredient.unit` also added to `RecipeIngredients` within `recipe_detail/`.        
+
+`AddRecipeForm` updated so that an image is no longer required for submit.      
+
+
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
@@ -140,3 +144,4 @@ As the `Ingredient` and `AddIngredient` components are shared between Add Recipe
 - Remove any inline styles that might be triggering micro re-renders and slowing application down.      
 - Placeholder image to be added if no image uploaded during CREATE recipe.       
 - User feedback upon action completion.     
+- No FE validation on Update Recipe to prevent form with empty fields from being submitted.     

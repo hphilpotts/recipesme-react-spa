@@ -93,10 +93,16 @@ export default function AddRecipe() {
   const validateInput = form => {
     let isValid = true
     for (const field in form) {
+
+      if (field === 'image') {
+        break
+      }
+
       if (!form[field]) {
         console.warn(`The ${field} field is empty! Please try again!`)
         isValid = false
       }
+      
     }
     return isValid
   }
