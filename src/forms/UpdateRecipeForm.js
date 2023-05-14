@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState } from 'react'
 
 import Axios from 'axios'
 
@@ -98,6 +98,7 @@ export default function EditRecipe({ recipe }) {
     Axios.put(`/recipes/${recipeId}`, { ...fieldsToUpdate })
       .then(res => {
         console.log(res);
+        navigateTo(`/recipes/${recipeId}`)
       })
       .catch(err => {
         console.error(err);
