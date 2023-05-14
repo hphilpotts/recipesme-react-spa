@@ -9,7 +9,7 @@ export default function Ingredient({ ingredient, removeIngredientHandler }) {
 
     return (
         <div>
-            <span>{ingredient.amount}{ingredient.item}     </span>
+            <span>{ingredient.amount}{ingredient.unit}{ingredient.item}     </span>
             <button onClick={e => removeIngredient(e, ingredient)}>-</button>
         </div>
     )

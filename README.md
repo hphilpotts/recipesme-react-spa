@@ -108,18 +108,35 @@ I've done some restructuring and renaming - given the closeness between Add Reci
 
 I'll revisit the above later. Moving on to DELETE functionality now. Was reasonably easy to implement!      
 
-- _fixed the above issue where document not being updated with three keystrokes... needed `...` in front of `fieldsToUpdate`: without spread syntax the body object had this as a key:value pair rather than the key:values from within `fieldsToUpdate..._     
+- _fixed the above issue where document not being updated with three keystrokes... needed `...` in front of `fieldsToUpdate`: without spread syntax the body object had the object name and its properties as a key:value pair rather than the key:values from within the `fieldsToUpdate` object..._     
 
 14/05/23:       
 
 `UpdateRecipeForm` now navigates to `RecipeDetail` upon successful form submission.     
 
+I have realised that the `Ingredients` property in `recipeSchema` in the backend in fact can have an object of three keys, which are cast to specific types:      
 
+```
+        {
+            item: String,
+            amount: Number,
+            unit: String
+        }
+```
+
+All three fields are optional, however at present I am only using `amount` and `item`, and the requirement for `amount` to be `Number` means values like `pinch` cannot be entered. I'm therefore going back over `form_components` to make the required updates.       
+
+It seems sensible to make `ingredient.item` compulsory during CREATE/UPDATE recipe but the other two properties optional, so I have updated the `if` statement within `AddIngredient`'s `addButtonPress()` to reflect this.     
+
+As the `Ingredient` and `AddIngredient` components are shared between Add Recipe and Update Recipe forms only one update is required for both, which was nice.      
+
+`ingredient.unit` also added to `RecipeIngredients` within `recipe_detail/`
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Footer nav icons do not update correctly if user manually navigates to a path.        
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
 - When moving via routes some components render scrolled to the bottom - feels clumsy in most cases. Need to find cause and fix.        
-- Edit recipe requires a duplicated GET request when accessed via Recipe Detail - can this be improved upon?        
 - Remove any inline styles that might be triggering micro re-renders and slowing application down.      
+- Placeholder image to be added if no image uploaded during CREATE recipe.       
+- User feedback upon action completion.     

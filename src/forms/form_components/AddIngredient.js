@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function AddIngredient({ addFieldHandler }) {
 
-    const [ingredient, setIngredient] = useState({ amount: '', item: '' })
+    const [ingredient, setIngredient] = useState({ amount: '', unit: '', item: '' })
 
     const ingredientChangeHandler = target => {
         const updatedIngredient = ingredient
@@ -14,13 +14,14 @@ export default function AddIngredient({ addFieldHandler }) {
     const addButtonPress = e => {
         e.preventDefault()
 
-        if (!ingredient.amount || !ingredient.item) {
-            console.warn('quantity or name is missing');
+        if (!ingredient.item) {
+            console.warn('ingredient field is empty!');
         } else {
             addFieldHandler(ingredient, 'ingredients')
-            setIngredient({ amount: '', item: '' })
+            setIngredient({ amount: '', unit: '', item: '' })
 
             document.getElementById('item-input').value = ''
+            document.getElementById('unit-input').value = ''
             const amountInput = document.getElementById('amount-input')
             amountInput.value = ''
             amountInput.select()
@@ -39,6 +40,10 @@ export default function AddIngredient({ addFieldHandler }) {
             <label>
                 quantity
                 <input id='amount-input' name={'amount'} onChange={e => ingredientChangeHandler(e.target)} onKeyDown={e => submitOnEnterPress(e)} />
+            </label>
+            <label>
+                unit
+                <input id='unit-input' name={'unit'} onChange={e => ingredientChangeHandler(e.target)} onKeyDown={e => submitOnEnterPress(e)} />
             </label>
             <label>
                 ingredient
