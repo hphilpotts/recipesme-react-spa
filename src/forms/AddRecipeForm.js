@@ -13,7 +13,7 @@ import Step from './form_components/Step'
 
 import './Forms.css'
 
-export default function AddRecipe() {
+export default function AddRecipe({ showSnackbar }) {
 
   const [formInput, setFormInput] = useState({
     title: '',
@@ -82,6 +82,7 @@ export default function AddRecipe() {
     if (validateInput(formInput)) {
       Axios.post('/recipe', formInput)
         .then(() => {
+          showSnackbar()
           navigateTo('/index')
         })
         .catch(err => {

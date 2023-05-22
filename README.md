@@ -142,6 +142,14 @@ Getting the path from the URL was simple enough, as was using `setValue()` to hi
 
 Rather than passing the newly-added functionality up to a parent component, or indeed making the mistake of trying to directly change the `detailView` prop within `Footer.js`, I decided to incorporate an 'OR' operator within the JSX ternary statement condition which would evaluate both the `detailView` prop and a new `detailViewOverridden` state: if either evaluate to `true` the user is in 'detail' view and the "BACK" button should be rendered in the footer.      
 
+I'm now working on providing user feedback upon action completion. I have used _MUI_ 'toast' notifications in the past so I felt this was a good place to start. I've decided to use 'snackbar' notifications for actions such as add recipe success, delete recipe success, etc.     
+
+The first thing that has become apparent is that there is an added degree of complexity when working with notifications as part of a React SPA, as compared with using toast notifications with multi-page apps (a Django app, if I remember correctly) as I have done in the past. The first decisions to be made relate to where to place my notification components in terms of the parent-child hierarchy, and then how to go on to split different notification components up.     
+
+I have decided to go with a `Notifier` component as a child of `App.js`. Each type of message will be a child component of `Notifier.js`. The 'show' functionality for notifications will sit in `App` and can then be passed down via `Body` to descendants as required.       
+
+With this setup I have been able to get a simple 'success' notification (`Success.js`, shockingly) to display when a recipe is successfully added. The next challenge will be working out how best to render different notifications through the current setup.     
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
