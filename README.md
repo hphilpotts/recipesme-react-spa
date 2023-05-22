@@ -134,11 +134,16 @@ As the `Ingredient` and `AddIngredient` components are shared between Add Recipe
 
 `AddRecipeForm` updated so that an image is no longer required for submit.      
 
+22/05/23:       
 
+Footer icons now update (correct icon highlighted, either 'RECIPES' or 'BACK' shown as middle icon depending on if user is in index or detail view) even when user manually navigates to a path.        
+
+Getting the path from the URL was simple enough, as was using `setValue()` to highlight the correct icon. Causing either "BACK" or "RECIPES" to display correctly was trickier, as normal 'click'-based navigation relies on a the `detailView` prop to render conditionally.       
+
+Rather than passing the newly-added functionality up to a parent component, or indeed making the mistake of trying to directly change the `detailView` prop within `Footer.js`, I decided to incorporate an 'OR' operator within the JSX ternary statement condition which would evaluate both the `detailView` prop and a new `detailViewOverridden` state: if either evaluate to `true` the user is in 'detail' view and the "BACK" button should be rendered in the footer.      
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
-- Footer nav icons do not update correctly if user manually navigates to a path.        
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
 - When moving via routes some components render scrolled to the bottom - feels clumsy in most cases. Need to find cause and fix.        
 - Remove any inline styles that might be triggering micro re-renders and slowing application down.      
