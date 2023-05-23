@@ -15,26 +15,29 @@ export default function App() {
     setDetailView(bool)
   }
 
-  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const showSnackbar = () => {
+  const [snackbarNotification, setSnackbarNotification] = useState({ type: null, message: null })
+
+  const showSnackbar = notification => {
     setSnackbarOpen(true)
+    setSnackbarNotification(notification)
   }
 
   const handleSnackbarClose = (reason) => {
     if (reason === 'clickaway') {
-        return;
+      return;
     }
 
     setSnackbarOpen(false);
-};
+  };
 
   return (
     <main>
       <Header></Header>
       <Body isInDetailView={isInDetailView} showSnackbar={showSnackbar}></Body>
       <Footer detailView={detailView} isInDetailView={isInDetailView}></Footer>
-      <Notifier open={snackbarOpen} handleClose={handleSnackbarClose}/>
+      <Notifier open={snackbarOpen} notification={snackbarNotification} handleClose={handleSnackbarClose} />
     </main>
   )
 }

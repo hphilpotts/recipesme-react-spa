@@ -150,6 +150,12 @@ I have decided to go with a `Notifier` component as a child of `App.js`. Each ty
 
 With this setup I have been able to get a simple 'success' notification (`Success.js`, shockingly) to display when a recipe is successfully added. The next challenge will be working out how best to render different notifications through the current setup.     
 
+23/05/23:       
+
+By passing a object instance of a `Notification` class (imported from `snackbarHelper.js`) into `showSnackbar()`, and making changes to `Notifier`, I am now able to reuse notifications and the `showSnackbar` function across the app. The object passed in takes a `type` property which defines the appearance of the snackbar notification, and a `message` property that provides the notificaiton content.       
+
+
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       

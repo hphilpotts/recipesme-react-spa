@@ -12,6 +12,7 @@ import AddStep from './form_components/AddStep'
 import Step from './form_components/Step'
 
 import './Forms.css'
+import { addRecipeNotification, missingFieldNotification } from '../snackbar/snackbarHelpers'
 
 export default function AddRecipe({ showSnackbar }) {
 
@@ -82,7 +83,7 @@ export default function AddRecipe({ showSnackbar }) {
     if (validateInput(formInput)) {
       Axios.post('/recipe', formInput)
         .then(() => {
-          showSnackbar()
+          showSnackbar(addRecipeNotification)
           navigateTo('/index')
         })
         .catch(err => {
@@ -90,6 +91,7 @@ export default function AddRecipe({ showSnackbar }) {
         })
     }
   }
+
 
   const validateInput = form => {
     let isValid = true
@@ -100,7 +102,7 @@ export default function AddRecipe({ showSnackbar }) {
       }
 
       if (!form[field]) {
-        console.warn(`The ${field} field is empty! Please try again!`)
+        showSnackbar(missingFieldNotification)
         isValid = false
       }
       
