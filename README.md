@@ -158,6 +158,8 @@ I've refactored the user feedback components significantly - now using just two:
 
 I'm now rolling out user feedback across the app. I'm pretty happy with the structure in place: I am able to easily update components to show notifications with relatively few edits, and the method by which notificaitons are produced is consistent regardless of use case.     
 
+Fixed issue where scroll position persists through `react-router-dom` navigation (meaning user is often placed half-way down or at the bottom of a new page when navigating). Simply a case of finding the right _Stack Overflow_ thread and copy-pasting the best solution!        
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
