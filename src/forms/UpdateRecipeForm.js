@@ -13,7 +13,9 @@ import Step from './form_components/Step'
 
 import '../forms/Forms.css'
 
-export default function EditRecipe({ recipe }) {
+import { updatedRecipeNotification, updateFailedNotification } from '../user_feedback/notificationHelpers';
+
+export default function EditRecipe({ recipe, showNotification }) {
 
   const params = useParams()
 
@@ -94,14 +96,14 @@ export default function EditRecipe({ recipe }) {
   const formSubmitHandler = e => {
     e.preventDefault()
     const recipeId = params.id
-    console.log(recipeId);
     Axios.put(`/recipes/${recipeId}`, { ...fieldsToUpdate })
       .then(res => {
-        console.log(res);
+        showNotification(updatedRecipeNotification)
         navigateTo(`/recipes/${recipeId}`)
       })
       .catch(err => {
-        console.error(err);
+        console.error(err.message);
+        showNotification(updateFailedNotification)
       })
   }
 

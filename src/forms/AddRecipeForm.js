@@ -12,7 +12,7 @@ import AddStep from './form_components/AddStep'
 import Step from './form_components/Step'
 
 import './Forms.css'
-import { addRecipeNotification, missingFieldNotification } from '../user_feedback/notificationHelpers'
+import { addedRecipeNotification, missingFieldNotification, addFailedNotification } from '../user_feedback/notificationHelpers'
 
 export default function AddRecipe({ showNotification }) {
 
@@ -83,11 +83,12 @@ export default function AddRecipe({ showNotification }) {
     if (validateInput(formInput)) {
       Axios.post('/recipe', formInput)
         .then(() => {
-          showNotification(addRecipeNotification)
+          showNotification(addedRecipeNotification)
           navigateTo('/index')
         })
         .catch(err => {
           console.error(err)
+          showNotification(addFailedNotification)
         })
     }
   }

@@ -156,6 +156,8 @@ By passing a object instance of a `Notification` class (imported from `snackbarH
 
 I've refactored the user feedback components significantly - now using just two: a `Notifier` and a `Notification` (rather than distinct components for each notification type as before). I have also renamed a lot of variables and directories for clarity - now referring to 'notification(s)' and 'user feedback' rather than the more obscurely named 'snackbar'... which would make no sense to anyone unfamiliar with the MUI component referenced.       
 
+I'm now rolling out user feedback across the app. I'm pretty happy with the structure in place: I am able to easily update components to show notifications with relatively few edits, and the method by which notificaitons are produced is consistent regardless of use case.     
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       

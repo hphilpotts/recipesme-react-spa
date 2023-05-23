@@ -25,7 +25,7 @@ export default function Body({ isInDetailView, showNotification }) {
         <Route path='index' element={<RecipeIndex isInDetailView={isInDetailView} />}></Route>
         <Route path='recipes/:id' element={<RecipeDetail recipe={currentRecipe} getRecipe={getRecipe} />}></Route>
         <Route path='add' element={<AddRecipe showNotification={showNotification} />}></Route>
-        <Route path='update/:id' element={<EditRecipe recipe={currentRecipe} />}></Route>
+        <Route path='update/:id' element={<EditRecipe recipe={currentRecipe} showNotification={showNotification}/>}></Route>
       </Routes>
     </div>
   )
