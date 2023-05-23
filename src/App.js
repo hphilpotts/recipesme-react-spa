@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Header from './main/Header'
 import Body from './main/Body'
 import Footer from './main/Footer'
-import Notifier from './snackbar/Notifier'
+import Notifier from './user_feedback/Notifier'
 
 import './App.css'
 
@@ -15,29 +15,27 @@ export default function App() {
     setDetailView(bool)
   }
 
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [notificationVisible, setNotificationVisible] = useState(false);
+  const [notification, setNotification] = useState({ type: null, message: null })
 
-  const [snackbarNotification, setSnackbarNotification] = useState({ type: null, message: null })
-
-  const showSnackbar = notification => {
-    setSnackbarOpen(true)
-    setSnackbarNotification(notification)
+  const showNotification = notification => {
+    setNotificationVisible(true)
+    setNotification(notification)
   }
 
-  const handleSnackbarClose = (reason) => {
+  const handleNotificationClose = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setSnackbarOpen(false);
+    setNotificationVisible(false);
   };
 
   return (
     <main>
       <Header></Header>
-      <Body isInDetailView={isInDetailView} showSnackbar={showSnackbar}></Body>
+      <Body isInDetailView={isInDetailView} showNotification={showNotification}></Body>
       <Footer detailView={detailView} isInDetailView={isInDetailView}></Footer>
-      <Notifier open={snackbarOpen} notification={snackbarNotification} handleClose={handleSnackbarClose} />
+      <Notifier open={notificationVisible} notification={notification} handleClose={handleNotificationClose} />
     </main>
   )
 }

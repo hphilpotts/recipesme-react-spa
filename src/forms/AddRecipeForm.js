@@ -12,9 +12,9 @@ import AddStep from './form_components/AddStep'
 import Step from './form_components/Step'
 
 import './Forms.css'
-import { addRecipeNotification, missingFieldNotification } from '../snackbar/snackbarHelpers'
+import { addRecipeNotification, missingFieldNotification } from '../user_feedback/notificationHelpers'
 
-export default function AddRecipe({ showSnackbar }) {
+export default function AddRecipe({ showNotification }) {
 
   const [formInput, setFormInput] = useState({
     title: '',
@@ -83,7 +83,7 @@ export default function AddRecipe({ showSnackbar }) {
     if (validateInput(formInput)) {
       Axios.post('/recipe', formInput)
         .then(() => {
-          showSnackbar(addRecipeNotification)
+          showNotification(addRecipeNotification)
           navigateTo('/index')
         })
         .catch(err => {
@@ -102,7 +102,7 @@ export default function AddRecipe({ showSnackbar }) {
       }
 
       if (!form[field]) {
-        showSnackbar(missingFieldNotification)
+        showNotification(missingFieldNotification)
         isValid = false
       }
       
