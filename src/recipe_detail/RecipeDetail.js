@@ -10,6 +10,8 @@ import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
 import ConfirmDelete from './ConfirmDelete';
 
+import '../recipe_detail/Detail.css'
+
 export default function RecipeDetail({ recipe, getRecipe }) {
 
   const [ingredients, setIngredients] = useState([])
@@ -70,7 +72,7 @@ export default function RecipeDetail({ recipe, getRecipe }) {
       <h1>{recipe.title}</h1>
       {/* TODO - add image here when functionality up and running! */}
       <h2>{recipe.description}</h2>
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}><span style={{ fontWeight: "bold" }}>Recipe tags:</span>{renderTags(recipe.tags)}</div>
+      <div id='tags' ><span id='tag-label'>Recipe tags:</span>{renderTags(recipe.tags)}</div>
       <div>
         <h3>Ingredients:</h3>
         <RecipeIngredients ingredients={ingredients} />

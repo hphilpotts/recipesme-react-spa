@@ -1,0 +1,8 @@
+#tags {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#tag-label {
+    font-weight: bold;
+}

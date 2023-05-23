@@ -112,7 +112,7 @@ export default function AddRecipe({ showNotification }) {
   }
 
   return (
-    <form style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <form>
 
       <label>
         recipe name

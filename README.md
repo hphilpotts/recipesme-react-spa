@@ -160,11 +160,12 @@ I'm now rolling out user feedback across the app. I'm pretty happy with the stru
 
 Fixed issue where scroll position persists through `react-router-dom` navigation (meaning user is often placed half-way down or at the bottom of a new page when navigating). Simply a case of finding the right _Stack Overflow_ thread and copy-pasting the best solution!        
 
+Removed inline styles used in `AddRecipeForm`, `UpdateRecipeForm` and `RecipeDetail` in order to prevent micro re-renders.
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
-- When moving via routes some components render scrolled to the bottom - feels clumsy in most cases. Need to find cause and fix.        
-- Remove any inline styles that might be triggering micro re-renders and slowing application down.      
+- `AddRecipe` and `UpdateRecipe` could be condensed into a single form component - at present there is a lot of duplication.        
 - Placeholder image to be added if no image uploaded during CREATE recipe.       
-- User feedback upon action completion.     
+- User feedback upon action completion to be rolled out across app.     
 - No FE validation on Update Recipe to prevent form with empty fields from being submitted.     
