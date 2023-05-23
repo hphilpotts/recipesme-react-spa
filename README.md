@@ -160,7 +160,13 @@ I'm now rolling out user feedback across the app. I'm pretty happy with the stru
 
 Fixed issue where scroll position persists through `react-router-dom` navigation (meaning user is often placed half-way down or at the bottom of a new page when navigating). Simply a case of finding the right _Stack Overflow_ thread and copy-pasting the best solution!        
 
-Removed inline styles used in `AddRecipeForm`, `UpdateRecipeForm` and `RecipeDetail` in order to prevent micro re-renders.
+Removed inline styles used in `AddRecipeForm`, `UpdateRecipeForm` and `RecipeDetail` in order to prevent micro re-renders.      
+
+24/05/23:       
+
+Fixed bug where footer highlight still not updating properly on manual browser bar navigation (getting stuck on "BACK" and not reverting to "RECIPES").     
+
+
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     

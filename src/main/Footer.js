@@ -25,6 +25,7 @@ export default function Footer({ detailView, isInDetailView }) {
 
   const resetFooter = () => {
     isInDetailView(false)
+    setDetailViewOverridden(false)
   }
 
   const backToIndex = () => {
@@ -36,10 +37,12 @@ export default function Footer({ detailView, isInDetailView }) {
     const currentPath = window.location.pathname
 
     if (currentPath === '/') {
+      setDetailViewOverridden(false)
       return 0 // home
     }
 
     if (currentPath === '/add') {
+      setDetailViewOverridden(false)
       return 2 // add
     }
 
@@ -62,10 +65,10 @@ export default function Footer({ detailView, isInDetailView }) {
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <Tabs className='footer-tabs' value={value} onChange={handleChange} onClick={resetFooter} aria-label="icon label tabs example">
           <Tab to='/' icon={<HouseIcon />} label="HOME" />
-          { ( detailView || detailViewOverridden ) ? 
-          <Tab to='/' icon={<MenuOpenIcon />} label="BACK" onClick={backToIndex}/>
-          : 
-          <Tab to='/' icon={<FastfoodIcon />} label="RECIPES" />
+          {(detailView || detailViewOverridden) ?
+            <Tab to='/' icon={<MenuOpenIcon />} label="BACK" onClick={backToIndex} />
+            :
+            <Tab to='/' icon={<FastfoodIcon />} label="RECIPES" />
           }
           <Tab to='/' icon={<AddBoxIcon />} label="ADD RECIPE" onClick={resetFooter} />
         </Tabs>
