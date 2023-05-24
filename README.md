@@ -166,7 +166,9 @@ Removed inline styles used in `AddRecipeForm`, `UpdateRecipeForm` and `RecipeDet
 
 Fixed bug where footer highlight still not updating properly on manual browser bar navigation (getting stuck on "BACK" and not reverting to "RECIPES").     
 
-Fixed another bug where refresh / manual navigation to an Update Recipe form breaks app: `recipe` prop passed is empty object (no `Axios.get` request is made) - this causes `includes()` and `map()` methods to error where no property (and therfore no array) is found when called. Was a tricky one to get working - _and potentially indicative of a problematic approach?_ - but it seems to all work ok now!             
+Fixed another bug where refresh / manual navigation to an Update Recipe form breaks app: `recipe` prop passed is empty object (no `Axios.get` request is made) - this causes `includes()` and `map()` methods to error where no property (and therfore no array) is found when called. Was a tricky one to get working - _and potentially indicative of a problematic approach?_ - but it seems to all work ok now!         
+
+User feedback rolled out across app, with notifications added to `RecipeDetail` to cover DELETE user actions. At this point I believe all necessary notifications have been implemented.        
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     

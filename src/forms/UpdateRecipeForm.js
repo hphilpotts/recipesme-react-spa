@@ -25,14 +25,12 @@ export default function EditRecipe({ recipe, getRecipe, showNotification }) {
     if (!recipe.tags) {
       Axios.get(`/recipes/${params.id}`)
         .then(res => {
-          console.log(res.data);
           getRecipe(res.data)
         })
         .catch(err => {
           console.error(err)
         })
     } else {
-      console.log(recipe);
       const defaultTags = tags.map(tag => {
         if (recipe.tags.includes(tag)) {
           return true

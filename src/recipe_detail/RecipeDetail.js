@@ -10,9 +10,11 @@ import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
 import ConfirmDelete from './ConfirmDelete';
 
+import { deletedRecipeNotification, deleteFailedNotification, deleteWarningNotification, deleteCancelledNotification } from '../user_feedback/notificationHelpers';
+
 import '../recipe_detail/Detail.css'
 
-export default function RecipeDetail({ recipe, getRecipe }) {
+export default function RecipeDetail({ recipe, getRecipe, showNotification }) {
 
   const [ingredients, setIngredients] = useState([])
   const [steps, setSteps] = useState([])
@@ -47,22 +49,25 @@ export default function RecipeDetail({ recipe, getRecipe }) {
 
   const showConfirmDelete = e => {
     e.preventDefault()
+    showNotification(deleteWarningNotification)
     setConfirmDeleteIsVisible(true)
   }
 
   const hideConfirmDelete = e => {
     e.preventDefault()
     setConfirmDeleteIsVisible(false)
+    setTimeout(function() {showNotification(deleteCancelledNotification)}, 500) // timeout here to prevent immediate close of notification (caused by re-render?)
   }
 
   const deleteRecipe = e => {
     e.preventDefault()
     Axios.delete(`/recipes/${params.id}`)
       .then(res => {
-        console.log(res)
+        showNotification(deletedRecipeNotification)
       })
       .catch(err => {
         console.error(err);
+        showNotification(deleteFailedNotification)
       })
     navigateTo(`/index`)
   }
