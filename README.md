@@ -24,6 +24,10 @@ Now working on providing recipe detail. After some thinking (and advice getting)
 
 `RecipeDetail.js` component now successfuly recieving Axios requests. Next step is formatting details component(s).     
 
+<p align="center">
+    <img src="readme_img/earlyIndex.png" alt="screenshot of index view from early development" width="300"/>
+</p>
+
 04/05/23:       
 
 `RecipeIngredients.js` component added - props being passed from parent (RecipeDetail) by mapping over `res.data.ingredients` and storing this in a state to be passed as a prop. Similar approach used for `RecipeSteps.js`.
@@ -71,6 +75,10 @@ As I was about to move onto Axios testing for the `AddRecipe` form, I noticed th
 Firstly, I finally made the call to separate out checkbox inputs from text inputs. I then implemented an `isChecked` state, intialised as an array of `false` booleans the length of the `tags` array. As checkboxes are checked and unchecked, `formInput.tags` is updated as before, but now the new `isChecked` array is also updated: the `checked` prop of each checkbox is set based on its respective index within the boolean `isChecked` array, thus storing checked statuses safely in state.     
 
 First Axios post tests for adding recipes returned `500` errors relating to Mongoose Model validation errors: the problem lay with the ongoing issue I have had with getting image uploads to work on the backend (currently lacking correct AWS/Cloudfront keys in the `.env` file). With the validations around `image` and `imageURL` properties temporarily removed I was able to successfully post new recipe documents to the DB.     
+
+<p align="center">
+    <img src="readme_img/create-success.png" alt="screenshot of successful POST request in console" width="300"/>
+</p>
 
 Successful POST requests result in the user being navigated to the Recipe Index.        
 
@@ -166,7 +174,13 @@ Removed inline styles used in `AddRecipeForm`, `UpdateRecipeForm` and `RecipeDet
 
 Fixed bug where footer highlight still not updating properly on manual browser bar navigation (getting stuck on "BACK" and not reverting to "RECIPES").     
 
-Fixed another bug where refresh / manual navigation to an Update Recipe form breaks app: `recipe` prop passed is empty object (no `Axios.get` request is made) - this causes `includes()` and `map()` methods to error where no property (and therfore no array) is found when called. Was a tricky one to get working - _and potentially indicative of a problematic approach?_ - but it seems to all work ok now!         
+Fixed another bug where refresh / manual navigation to an Update Recipe form breaks app: `recipe` prop passed is empty object (no `Axios.get` request is made) - this causes `includes()` and `map()` methods to error where no property (and therfore no array) is found when called.      
+
+<p align="center">
+    <img src="readme_img/recipe-undefined.png" alt="screenshot of console errors when refreshing UpdateRecipe.js" width="300"/>
+</p>
+
+Was a tricky one to get working - _and potentially indicative of a problematic approach?_ - but it seems to all work ok now!         
 
 User feedback rolled out across app, with notifications added to `RecipeDetail` to cover DELETE user actions. At this point I believe all necessary notifications have been implemented.        
 
@@ -175,6 +189,5 @@ User feedback rolled out across app, with notifications added to `RecipeDetail` 
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
 - `AddRecipe` and `UpdateRecipe` could be condensed into a single form component - at present there is a lot of duplication.        
 - Placeholder image to be added if no image uploaded during CREATE recipe.       
-- User feedback upon action completion to be rolled out across app.     
 - No FE validation on Update Recipe to prevent form with empty fields from being submitted.     
 - Implement loading spinner within `UpdateRecipeForm`.      
