@@ -51,7 +51,7 @@ export default function EditRecipe({ recipe, getRecipe, showNotification }) {
 
   const textChangeHandler = target => {
     const newFieldsToUpdate = fieldsToUpdate
-    newFieldsToUpdate[target.name] = target.value
+    newFieldsToUpdate[target.name] = target.value.trim()
     setFieldsToUpdate(newFieldsToUpdate)
   }
 
@@ -105,22 +105,34 @@ export default function EditRecipe({ recipe, getRecipe, showNotification }) {
     setFieldsToUpdate(newFieldsToUpdate)
   }
 
-
+  const checkAllFieldsPopulated = () => {
+    const formPending = { ...fieldsToUpdate }
+    for (let field in formPending) {
+      if (!formPending[field].length) return false
+    }
+    return true
+  }
 
   const navigateTo = useNavigate()
 
   const formSubmitHandler = e => {
     e.preventDefault()
-    const recipeId = params.id
-    Axios.put(`/recipes/${recipeId}`, { ...fieldsToUpdate })
-      .then(res => {
-        showNotification(updatedRecipeNotification)
-        navigateTo(`/recipes/${recipeId}`)
-      })
-      .catch(err => {
-        console.error(err.message);
-        showNotification(updateFailedNotification)
-      })
+    const formIsValid = checkAllFieldsPopulated()
+    if (formIsValid) {
+      const recipeId = params.id
+      Axios.put(`/recipes/${recipeId}`, { ...fieldsToUpdate })
+        .then(res => {
+          showNotification(updatedRecipeNotification)
+          navigateTo(`/recipes/${recipeId}`)
+        })
+        .catch(err => {
+          console.error(err.message);
+          showNotification(updateFailedNotification)
+        })
+    } else {
+      showNotification(updateFailedNotification)
+    }
+
   }
 
   return (

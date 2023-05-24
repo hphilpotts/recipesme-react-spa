@@ -186,9 +186,50 @@ User feedback rolled out across app, with notifications added to `RecipeDetail` 
 
 Instead of a loading spinner in `UpdateRecipeForm` I have decided to instead use _MUI_'s `<Skeleton />` component - an interesting alternative to the classic spinner - when running a GET request upon manual refresh/navigation.      
 
+I've now prevented empty fields from being submitted via `UpdateRecipeForm` by adding a validation function inside `formSubmitHandler`, prior to a PUT request being sent.      
+
+<p align="center">
+    <img src="readme_img/empty-update-fields.png" alt="screenshot of an empty form console log" />
+</p>
+
+
+My initial attempt looked like so:
+
+```
+  const checkAllFieldsPopulated = () => {
+    const formPending = { ...fieldsToUpdate }
+    for (let field in formPending) {
+      if (field === 'title' || field === 'description') {
+        if (!formPending[field]) {
+          return false
+        }
+      } else {
+        if (formPending[field].length === 0) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+```
+
+...I had differentiated between text fields and array values, however this was not neccessary as both types of value return a `.length` of `0` (and therefore a `falsy` value) if empty: 
+
+```
+ const checkAllFieldsPopulated = () => {
+    const formPending = { ...fieldsToUpdate }
+    for (let field in formPending) {
+      if (!formPending[field].length) return false
+    }
+    return true
+  }
+```
+
+I realised (by sheer chance) that whitespace in a text field would pass validation (having a `length` > `0`), as such I also updated `textChangeHandler` with a `.trim()` method when storing a form field value in `newFieldsToUpdate`. This has the dual effect of preventing whitespace-only titles and descriptions from being submitted, and also tidying up messy user input that contains unneccessary whitespace.       
+
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
 - Recipe steps cannot yet be reordered or edited during `AddRecipe` and `UpdateRecipe` form completion.       
-- `AddRecipe` and `UpdateRecipe` could be condensed into a single form component - at present there is a lot of duplication.        
+- `AddRecipe` and `UpdateRecipe` could be condensed into a single form component - at present there is a lot of duplication.      
+- Ensure whitespace-only `title` or `description` values cannot be submitted via `AddRecipeForm`.         
 - Placeholder image to be added if no image uploaded during CREATE recipe.       
-- No FE validation on Update Recipe to prevent form with empty fields from being submitted.     
