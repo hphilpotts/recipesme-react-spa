@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect, useMemo } from 'react'
 
 import Axios from 'axios'
 
@@ -15,23 +15,40 @@ import '../forms/Forms.css'
 
 import { updatedRecipeNotification, updateFailedNotification } from '../user_feedback/notificationHelpers';
 
-export default function EditRecipe({ recipe, showNotification }) {
+export default function EditRecipe({ recipe, getRecipe, showNotification }) {
 
   const params = useParams()
 
+  const tags = useMemo(() => ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek', 'Bulk'], [])
+
+  useEffect(() => {
+    if (!recipe.tags) {
+      Axios.get(`/recipes/${params.id}`)
+        .then(res => {
+          console.log(res.data);
+          getRecipe(res.data)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    } else {
+      console.log(recipe);
+      const defaultTags = tags.map(tag => {
+        if (recipe.tags.includes(tag)) {
+          return true
+        } else {
+          return false
+        }
+      })
+      setIsChecked(defaultTags)
+    }
+
+  }, [recipe, params.id, getRecipe, tags])
+
   const [fieldsToUpdate, setFieldsToUpdate] = useState({})
 
-  const tags = ['Healthy', 'Quick and Easy', 'Showstopper', 'Veggie', 'Cheat day', 'One Pot Wonder', 'Midweek', 'Bulk']
 
-  const defaultTags = tags.map(tag => {
-    if (recipe.tags.includes(tag)) {
-      return true
-    } else {
-      return false
-    }
-  })
-
-  const [isChecked, setIsChecked] = useState(defaultTags)
+  const [isChecked, setIsChecked] = useState([])
 
   const textChangeHandler = target => {
     const newFieldsToUpdate = fieldsToUpdate
@@ -108,62 +125,68 @@ export default function EditRecipe({ recipe, showNotification }) {
   }
 
   return (
-    <form >
+    <>
+      {recipe.tags ?
+        <form >
 
-      <label>
-        recipe name
-        <input name={'title'} onChange={e => textChangeHandler(e.target)} defaultValue={recipe.title} />
-      </label>
+          <label>
+            recipe name
+            <input name={'title'} onChange={e => textChangeHandler(e.target)} defaultValue={recipe.title} />
+          </label>
 
-      <label>
-        description
-        <textarea name={'description'} onChange={e => textChangeHandler(e.target)} defaultValue={recipe.description} />
-      </label>
+          <label>
+            description
+            <textarea name={'description'} onChange={e => textChangeHandler(e.target)} defaultValue={recipe.description} />
+          </label>
 
-      {tags.map((tag, index) => {
-        return (
-          <label key={uuid()}>
-            <input
-              type="checkbox"
-              value={tags[index]}
-              checked={isChecked[index]}
-              onChange={e => checkboxChangeHandler(e.target)}
-            />{tag}
-          </label>)
-      })}
+          {tags.map((tag, index) => {
+            return (
+              <label key={uuid()}>
+                <input
+                  type="checkbox"
+                  value={tags[index]}
+                  checked={isChecked[index]}
+                  onChange={e => checkboxChangeHandler(e.target)}
+                />{tag}
+              </label>)
+          })}
 
-      <label>
-        ingredients
+          <label>
+            ingredients
 
-        {fieldsToUpdate.ingredients
-          ?
-          fieldsToUpdate.ingredients.map((ingredient) => (
-            <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
-          ))
-          :
-          recipe.ingredients.map((ingredient) => (
-            <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
-          ))
-        }
-        <AddIngredient addFieldHandler={addFieldHandler} />
-      </label>
+            {fieldsToUpdate.ingredients
+              ?
+              fieldsToUpdate.ingredients.map((ingredient) => (
+                <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
+              ))
+              :
+              recipe.ingredients.map((ingredient) => (
+                <Ingredient ingredient={ingredient} removeIngredientHandler={removeIngredientHandler} key={uuid()} />
+              ))
+            }
+            <AddIngredient addFieldHandler={addFieldHandler} />
+          </label>
 
-      <label>
-        steps
-        {fieldsToUpdate.steps
-          ?
-          fieldsToUpdate.steps.map((step) => (
-            <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
-          ))
-          :
-          recipe.steps.map((step) => (
-            <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
-          ))
-        }
-        <AddStep addFieldHandler={addFieldHandler} />
-      </label>
+          <label>
+            steps
+            {fieldsToUpdate.steps
+              ?
+              fieldsToUpdate.steps.map((step) => (
+                <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
+              ))
+              :
+              recipe.steps.map((step) => (
+                <Step step={step} removeStepHandler={removeStepHandler} key={uuid()} />
+              ))
+            }
+            <AddStep addFieldHandler={addFieldHandler} />
+          </label>
 
-      <button type='submit' onClick={formSubmitHandler}>Submit form</button>
-    </form>
+          <button type='submit' onClick={formSubmitHandler}>Submit form</button>
+        </form>
+        :
+        <p>LOADING</p>
+      }
+    </>
   )
 }
