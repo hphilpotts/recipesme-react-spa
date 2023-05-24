@@ -77,7 +77,7 @@ Firstly, I finally made the call to separate out checkbox inputs from text input
 First Axios post tests for adding recipes returned `500` errors relating to Mongoose Model validation errors: the problem lay with the ongoing issue I have had with getting image uploads to work on the backend (currently lacking correct AWS/Cloudfront keys in the `.env` file). With the validations around `image` and `imageURL` properties temporarily removed I was able to successfully post new recipe documents to the DB.     
 
 <p align="center">
-    <img src="readme_img/create-success.png" alt="screenshot of successful POST request in console" width="300"/>
+    <img src="readme_img/create-success.png" alt="screenshot of successful POST request in console" />
 </p>
 
 Successful POST requests result in the user being navigated to the Recipe Index.        
@@ -177,12 +177,14 @@ Fixed bug where footer highlight still not updating properly on manual browser b
 Fixed another bug where refresh / manual navigation to an Update Recipe form breaks app: `recipe` prop passed is empty object (no `Axios.get` request is made) - this causes `includes()` and `map()` methods to error where no property (and therfore no array) is found when called.      
 
 <p align="center">
-    <img src="readme_img/recipe-undefined.png" alt="screenshot of console errors when refreshing UpdateRecipe.js" width="300"/>
+    <img src="readme_img/recipe-undefined.png" alt="screenshot of console errors when refreshing UpdateRecipe.js" />
 </p>
 
 Was a tricky one to get working - _and potentially indicative of a problematic approach?_ - but it seems to all work ok now!         
 
 User feedback rolled out across app, with notifications added to `RecipeDetail` to cover DELETE user actions. At this point I believe all necessary notifications have been implemented.        
+
+Instead of a loading spinner in `UpdateRecipeForm` I have decided to instead use _MUI_'s `<Skeleton />` component - an interesting alternative to the classic spinner - when running a GET request upon manual refresh/navigation.      
 
 ## To add / to-do:      
 - MUI theming: need to look at the documentation in more detail and/or find a decent tutorial for this.     
@@ -190,4 +192,3 @@ User feedback rolled out across app, with notifications added to `RecipeDetail` 
 - `AddRecipe` and `UpdateRecipe` could be condensed into a single form component - at present there is a lot of duplication.        
 - Placeholder image to be added if no image uploaded during CREATE recipe.       
 - No FE validation on Update Recipe to prevent form with empty fields from being submitted.     
-- Implement loading spinner within `UpdateRecipeForm`.      

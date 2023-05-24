@@ -10,6 +10,7 @@ import AddIngredient from './form_components/AddIngredient'
 import Ingredient from './form_components/Ingredient';
 import AddStep from './form_components/AddStep'
 import Step from './form_components/Step'
+import LoadingFormPlaceholder from './form_components/LoadingForm';
 
 import '../forms/Forms.css'
 
@@ -183,7 +184,10 @@ export default function EditRecipe({ recipe, getRecipe, showNotification }) {
           <button type='submit' onClick={formSubmitHandler}>Submit form</button>
         </form>
         :
-        <p>LOADING</p>
+        <form>
+          <div id='placeholder-padding'></div>
+          <LoadingFormPlaceholder />
+        </form>
       }
     </>
   )
